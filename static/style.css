@@ -1,0 +1,121 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.canvas-container, .predictions-container {
+    width: 100%;
+}
+
+canvas {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+}
+
+button {
+    margin: 10px 5px;
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.bar-plot {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.bar-label {
+    font-size: 14px;
+    color: #333;
+    width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.bar-progress {
+    flex: 1;
+    height: 20px;
+    background-color: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.bar-progress-fill {
+    height: 100%;
+    background-color: #007bff;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.bar-percentage {
+    font-size: 12px;
+    color: #6c757d;
+    min-width: 50px;
+    text-align: right;
+}
+
+.tooltip {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #6c757d;
+}
+
+.tooltip-text {
+    text-decoration: underline;
+    cursor: help;
+}
+
+@media (min-width: 768px) {
+    .content {
+        flex-direction: row;
+    }
+
+    .canvas-container, .predictions-container {
+        flex: 1;
+    }
+}

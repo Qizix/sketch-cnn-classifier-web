@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sketch Classifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Sketch Classifier</h1>
+        <p>Draw a sketch below and see the top predictions!</p>
+        <div class="content">
+            <div class="canvas-container">
+                <canvas id="sketchCanvas" width="250" height="250"></canvas>
+                <br>
+                <button onclick="clearCanvas()">Clear Canvas</button>
+            </div>
+            <div class="predictions-container">
+                <h2>Top Predictions:</h2>
+                <div id="predictionsBag"></div>
+            </div>
+        </div>
+        <div class="tooltip">
+            <span class="tooltip-text">ℹ️ Available classes: <span id="classList"></span></span>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='sketch.js') }}"></script>
+</body>
+</html>
