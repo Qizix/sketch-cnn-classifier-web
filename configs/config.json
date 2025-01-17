@@ -8,7 +8,7 @@
   "model": {
     "input_size": 256,
     "output_size": 250,
-    "batch_size": 64
+    "batch_size": 32
   },
   "training": {
     "checkpoint_dir": "../models/checkpoints/",
