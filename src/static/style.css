@@ -98,6 +98,15 @@ button:hover {
     min-width: 50px;
     text-align: right;
 }
+.ensemble-bar {
+    margin-bottom: 10px;
+}
+
+.ensemble-bar .bar-info {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 2px;
+}
 
 .tooltip {
     margin-top: 20px;
@@ -108,6 +117,56 @@ button:hover {
 .tooltip-text {
     text-decoration: underline;
     cursor: help;
+}
+.model-predictions {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.vote-button {
+    margin-top: 10px;
+    background-color: #28a745;
+}
+
+.vote-button:hover {
+    background-color: #218838;
+}
+
+#votingResults {
+    margin-top: 20px;
+}
+
+.voting-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.voting-bar-label {
+    width: 100px;
+    font-size: 14px;
+}
+
+.voting-bar-progress {
+    flex-grow: 1;
+    height: 20px;
+    background-color: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.voting-bar-fill {
+    height: 100%;
+    background-color: #007bff;
+    transition: width 0.3s ease;
+}
+
+.voting-bar-percentage {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #6c757d;
 }
 
 @media (min-width: 768px) {

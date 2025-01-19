@@ -9,19 +9,23 @@ with open("../configs/config.json", "r") as file:
     config = json.load(file)
 
 # Завантаження моделі
+# Завантаження моделі
 try:
-    model1 = tf.keras.models.load_model(config['training']['final_model_dir'] + "model15.01MobileNetV2.h5")
-    model2 = tf.keras.models.load_model(config['training']['final_model_dir'] + "mobilenetv2_day_four_v2.h5")
+    model1 = tf.keras.models.load_model(config['training']['final_model_dir'] + "VGG19.keras")
+    model2 = tf.keras.models.load_model(config['training']['final_model_dir'] + "MobileNetV2.keras")
+    model3 = tf.keras.models.load_model(config['training']['final_model_dir'] + "model15.01MobileNetV2.h5")  # Додайте назву вашої третьої моделі
     print("Models loaded successfully!")
 except Exception as e:
+    print(f"Error loading models: {str(e)}")
     print(f"Error loading models: {str(e)}")
     
 class_names = config['data']['class_names']
 print(class_names)
 
 model_names = {
-    "model1": "MobileNetV2",
-    "model2": "VGG19"
+    "model1": "VGG19",
+    "model2": "MobileNetV2 second",
+    "model3": "MobileNetV2 first"
 }
 
 # Функція для обробки зображення
@@ -58,22 +62,24 @@ def predict():
         image = Image.open(io.BytesIO(file.read())).convert("RGB")
         processed_image = preprocess_image(image)
         
-        # Передбачення для обох моделей
+        # Передбачення для всіх моделей
         predictions1 = model1.predict(processed_image)
         predictions2 = model2.predict(processed_image)
+        predictions3 = model3.predict(processed_image)
 
-        # Функція для отримання топ-10 результатів
-        def get_top_10(predictions):
-            top_10_indices = np.argsort(predictions[0])[-10:][::-1]
-            top_10_probabilities = predictions[0][top_10_indices]
+        # Функція для отримання топ-3 результатів
+        def get_top_3(predictions):
+            top_3_indices = np.argsort(predictions[0])[-3:][::-1]
+            top_3_probabilities = predictions[0][top_3_indices]
             return [{
                 "class": int(i),
                 "class_name": class_names[i],
                 "probability": float(p)
-            } for i, p in zip(top_10_indices, top_10_probabilities)]
+            } for i, p in zip(top_3_indices, top_3_probabilities)]
 
-        results1 = get_top_10(predictions1)
-        results2 = get_top_10(predictions2)
+        results1 = get_top_3(predictions1)
+        results2 = get_top_3(predictions2)
+        results3 = get_top_3(predictions3)
 
         # Об'єднання результатів
         results = {
@@ -84,6 +90,10 @@ def predict():
             "model2": {
                 "name": model_names["model2"],
                 "predictions": results2
+            },
+            "model3": {
+                "name": model_names["model3"],
+                "predictions": results3
             }
         }
 

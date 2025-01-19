@@ -78,10 +78,14 @@ function predictSketch() {
                 // Оновлення результатів для першої моделі
                 updatePredictions(data.model1.predictions, "predictionsBag1");
                 document.getElementById("model1Name").textContent = data.model1.name;
-    
+
                 // Оновлення результатів для другої моделі
                 updatePredictions(data.model2.predictions, "predictionsBag2");
                 document.getElementById("model2Name").textContent = data.model2.name;
+
+                // Оновлення результатів для третьої моделі
+                updatePredictions(data.model3.predictions, "predictionsBag3");
+                document.getElementById("model3Name").textContent = data.model3.name;
             })
             .catch((error) => {
                 console.error("Error:", error);
