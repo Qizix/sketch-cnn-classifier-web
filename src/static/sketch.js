@@ -73,56 +73,60 @@ function predictSketch() {
             method: "POST",
             body: formData,
         })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                return response.json();
-            })
+            .then((response) => response.json())
             .then((data) => {
-                const predictionsBag = document.getElementById("predictionsBag");
-                
-                // Оновлення існуючих або створення нових бар-плотів
-                data.forEach((item, index) => {
-                    let bar = predictionsBag.querySelector(`.bar:nth-child(${index + 1})`);
-                    
-                    if (!bar) {
-                        bar = document.createElement("div");
-                        bar.className = "bar";
-                        predictionsBag.appendChild(bar);
-
-                        const barLabel = document.createElement("div");
-                        barLabel.className = "bar-label";
-                        bar.appendChild(barLabel);
-
-                        const barProgress = document.createElement("div");
-                        barProgress.className = "bar-progress";
-                        const barProgressFill = document.createElement("div");
-                        barProgressFill.className = "bar-progress-fill";
-                        barProgress.appendChild(barProgressFill);
-                        bar.appendChild(barProgress);
-
-                        const barPercentage = document.createElement("div");
-                        barPercentage.className = "bar-percentage";
-                        bar.appendChild(barPercentage);
-                    }
-
-                    // Оновлення даних бар-плоту
-                    bar.querySelector('.bar-label').textContent = item.class_name;
-                    bar.querySelector('.bar-progress-fill').style.width = `${item.probability * 100}%`;
-                    bar.querySelector('.bar-percentage').textContent = `${(item.probability * 100).toFixed(2)}%`;
-                });
-
-                // Видалення зайвих бар-плотів, якщо такі є
-                while (predictionsBag.children.length > data.length) {
-                    predictionsBag.removeChild(predictionsBag.lastChild);
-                }
+                // Оновлення результатів для першої моделі
+                updatePredictions(data.model1.predictions, "predictionsBag1");
+                document.getElementById("model1Name").textContent = data.model1.name;
+    
+                // Оновлення результатів для другої моделі
+                updatePredictions(data.model2.predictions, "predictionsBag2");
+                document.getElementById("model2Name").textContent = data.model2.name;
             })
             .catch((error) => {
                 console.error("Error:", error);
                 alert("An error occurred. Please check the console for details.");
             });
-    }, "image/png");
+    });
+}
+function updatePredictions(predictions, elementId) {
+    const predictionsBag = document.getElementById(elementId);
+    
+    // Оновлення існуючих або створення нових бар-плотів
+    predictions.forEach((item, index) => {
+        let bar = predictionsBag.querySelector(`.bar:nth-child(${index + 1})`);
+        
+        if (!bar) {
+            bar = document.createElement("div");
+            bar.className = "bar";
+            predictionsBag.appendChild(bar);
+
+            const barLabel = document.createElement("div");
+            barLabel.className = "bar-label";
+            bar.appendChild(barLabel);
+
+            const barProgress = document.createElement("div");
+            barProgress.className = "bar-progress";
+            const barProgressFill = document.createElement("div");
+            barProgressFill.className = "bar-progress-fill";
+            barProgress.appendChild(barProgressFill);
+            bar.appendChild(barProgress);
+
+            const barPercentage = document.createElement("div");
+            barPercentage.className = "bar-percentage";
+            bar.appendChild(barPercentage);
+        }
+
+        // Оновлення даних бар-плоту
+        bar.querySelector('.bar-label').textContent = item.class_name;
+        bar.querySelector('.bar-progress-fill').style.width = `${item.probability * 100}%`;
+        bar.querySelector('.bar-percentage').textContent = `${(item.probability * 100).toFixed(2)}%`;
+    });
+
+    // Видалення зайвих бар-плотів, якщо такі є
+    while (predictionsBag.children.length > predictions.length) {
+        predictionsBag.removeChild(predictionsBag.lastChild);
+    }
 }
 
 // Очищення Canvas при завантаженні сторінки
